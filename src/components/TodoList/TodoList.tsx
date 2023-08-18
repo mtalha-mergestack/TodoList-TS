@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/components/TodoList/TodoList.module.css";
 import TodoItem from "@/components/TodoItem/TodoItem";
+import { ITodoListProps, ITodoList } from "@/store/TodoList/types";
 
-type TodoListProps = {
-  todos: string[];
-  addTask: (text: string) => void;
-  removeTask: (index: number) => void;
-  editTask: (index: number, value: string) => void;
-};
-function TodoList(props: TodoListProps) {
-  const { todos, addTask, removeTask, editTask } = props;
+function TodoList(props: ITodoListProps) {
+  const { todos, loading, error, addTask, removeTask, editTask, fetchTasks } = props;
   const [taskInput, setTaskInput] = useState("");
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const addListHandler = (key: string): void => {
     if (key == "Enter") {
-      addTask(taskInput);
+      addTask(todos.length + 1, taskInput);
       setTaskInput("");
     }
   };
@@ -40,15 +39,24 @@ function TodoList(props: TodoListProps) {
       />
       <hr />
       <ul className={styles.listContainer}>
-        {todos.map((val: string, i: number) => (
-          <TodoItem
-            key={i}
-            keyId={i}
-            value={val}
-            editListHandler={editListHandler}
-            removeListHandler={removeListHandler}
-          />
-        ))}
+        {loading ? (
+          error ? (
+            <h3>{error}</h3>
+          ) : (
+            <h1>Loading...</h1>
+          )
+        ) : (
+          todos.map((todoItem: ITodoList) => (
+            <TodoItem
+              key={todoItem.id}
+              keyId={todoItem.id}
+              value={todoItem.todo}
+              completed={todoItem.completed}
+              editListHandler={editListHandler}
+              removeListHandler={removeListHandler}
+            />
+          ))
+        )}
       </ul>
     </div>
   );

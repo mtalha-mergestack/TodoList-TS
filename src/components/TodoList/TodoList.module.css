@@ -32,6 +32,7 @@ hr {
 
 .listContainer {
     padding-left: 0;
+    overflow: auto;
 }
 
 .listContainer li {
