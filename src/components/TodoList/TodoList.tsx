@@ -4,18 +4,10 @@ import TodoItem from "@/components/TodoItem/TodoItem";
 import { ITodoListProps, ITodoList, IFormData } from "@/store/TodoList/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { todoSchema } from "@/store/utils/todoSchema";
 
 function TodoList(props: ITodoListProps) {
   const { todos, loading, error, addTask, removeTask, editTask, fetchTasks } = props;
-
-  const schema = yup.object().shape({
-    Task: yup
-      .string()
-      .required("Input cannot be empty")
-      .min(8, "Task should have at least 8 characters")
-      .matches(/^[^0-9]*$/, "Field should not contain numbers"),
-  });
 
   const {
     register,
@@ -23,7 +15,7 @@ function TodoList(props: ITodoListProps) {
     setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(todoSchema),
   });
 
   useEffect(() => {
