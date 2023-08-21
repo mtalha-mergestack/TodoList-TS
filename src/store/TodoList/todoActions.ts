@@ -1,24 +1,53 @@
-import { TodoActionTypes, ITodoList } from "@/store/TodoList/types";
+import { TodoActionTypes, ITodoList } from "src/store/TodoList/types";
 
-export const fetchTodosRequest = () => ({ type: TodoActionTypes.FETCH_TODOS_REQUEST });
-export const fetchTodosSuccess = (todos: ITodoList) => ({
-  type: TodoActionTypes.FETCH_TODOS_SUCCESS,
+export const fetchTasksRequest = () => ({ type: TodoActionTypes.FETCH_TASKS_REQUEST });
+export const fetchTasksSuccess = (todos: ITodoList) => ({
+  type: TodoActionTypes.FETCH_TASKS_SUCCESS,
   payload: todos,
 });
 export const fetchTodosFailure = (error: string) => ({
-  type: TodoActionTypes.FETCH_TODOS_FAILURE,
+  type: TodoActionTypes.FETCH_TASKS_FAILURE,
   payload: error,
 });
-export const addTodo = (index: number, text: string) => ({
-  type: TodoActionTypes.ADD_TODO,
-  payload: { id: index, todo: text },
+export const addTaskRequest = (task) => ({
+  type: TodoActionTypes.ADD_TASK_REQUEST,
+  payload: task,
 });
 
-export const removeTodo = (id: number) => ({
-  type: TodoActionTypes.REMOVE_TODO,
+export const addTaskSuccess = (task) => ({
+  type: TodoActionTypes.ADD_TASK_SUCCESS,
+  payload: task,
+});
+
+export const addTaskFailure = (error: string) => ({
+  type: TodoActionTypes.ADD_TASK_FAILURE,
+  payload: error,
+});
+export const deleteTaskRequest = (id) => ({
+  type: TodoActionTypes.DELETE_TASK_REQUEST,
   payload: id,
 });
-export const editTodo = (editTaskIndex: number, editTaskValue: string) => ({
-  type: TodoActionTypes.EDIT_TODO,
-  payload: { index: editTaskIndex, value: editTaskValue },
+
+export const deleteTaskSuccess = (id) => ({
+  type: TodoActionTypes.DELETE_TASK_SUCCESS,
+  payload: id,
+});
+
+export const deleteTaskFailure = (error: string) => ({
+  type: TodoActionTypes.DELETE_TASK_FAILURE,
+  payload: error,
+});
+export const updateTaskRequest = (id, text) => ({
+  type: TodoActionTypes.UPDATE_TASK_REQUEST,
+  payload: { id: id, todo: text },
+});
+
+export const updateTaskSuccess = (id, text) => ({
+  type: TodoActionTypes.UPDATE_TASK_SUCCESS,
+  payload: { id: id, todo: text },
+});
+
+export const updateTaskFailure = (error: string) => ({
+  type: TodoActionTypes.UPDATE_TASK_FAILURE,
+  payload: error,
 });

@@ -72,3 +72,6 @@ hr {
 .completed {
     text-decoration: line-through;
 }
+.error{
+    color: red;
+}

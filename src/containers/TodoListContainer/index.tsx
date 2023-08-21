@@ -1,26 +1,32 @@
 /* eslint-disable react-refresh/only-export-components */
 import { connect } from "react-redux";
-import TodoList from "@/components/TodoList/TodoList";
-import { addTodo, removeTodo, editTodo, fetchTodosRequest } from "@/store/TodoList/todoActions";
-import { IRootState } from "@/store/TodoList/types";
+import TodoList from "src/components/TodoList/TodoList";
+import {
+  fetchTasksRequest,
+  addTaskRequest,
+  deleteTaskRequest,
+  updateTaskRequest,
+} from "src/store/TodoList/todoActions";
+import { IRootState } from "src/store/TodoList/types";
 
 const mapStateToProps = (state: IRootState) => ({
-  todos: state.todos,
-  loading: state.loading,
-  error: state.error,
+  todos: state.todo.todos,
+  loading: state.todo.loading,
+  error: state.todo.error,
 });
+
 const maptDispatchToProps = (dispatch) => ({
   addTask: (index: number, text: string): void => {
-    dispatch(addTodo(index, text));
+    dispatch(addTaskRequest({ todo: text, isCompleted: false, userId: 1 }));
   },
-  removeTask: (id: number): void => {
-    dispatch(removeTodo(id));
+  removeTask: (id: string): void => {
+    dispatch(deleteTaskRequest(id));
   },
-  editTask: (editTaskIndex: number, editTaskValue: string): void => {
-    dispatch(editTodo(editTaskIndex, editTaskValue));
+  editTask: (id: string, value: string): void => {
+    dispatch(updateTaskRequest(id, value));
   },
   fetchTasks: () => {
-    dispatch(fetchTodosRequest());
+    dispatch(fetchTasksRequest());
   },
 });
 const TodoListContainer = connect(mapStateToProps, maptDispatchToProps)(TodoList);

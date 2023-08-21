@@ -1,4 +1,4 @@
-import TodoListContainer from "@/containers/TodoListContainer";
+import TodoListContainer from "src/containers/TodoListContainer";
 
 function Todo() {
   return <TodoListContainer />;

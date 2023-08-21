@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import styles from "@/components/TodoList/TodoList.module.css";
-import { ITodoItemProps } from "@/store/TodoList/types";
+import styles from "src/components/TodoList/TodoList.module.css";
+import { ITodoItemProps } from "src/store/TodoList/types";
 
 function TodoItem(props: ITodoItemProps) {
-  const { keyId, value, completed, editListHandler, removeListHandler } = props;
+  const { taskId, value, completed, editTaskHandler, removeTaskHandler } = props;
 
   const [editTaskInput, setEditTaskInput] = useState(value);
   const [isCompleted, setIsCompleted] = useState(completed);
@@ -11,13 +11,13 @@ function TodoItem(props: ITodoItemProps) {
 
   const editTask = (key: string, index: number, value: string): void => {
     if (key == "Enter" && isCompleted != true) {
-      editListHandler(index, value);
+      editTaskHandler(index, value);
       setIsEditing(false);
     }
   };
 
   return (
-    <li key={keyId}>
+    <li key={taskId}>
       {isEditing || (
         <input
           type="checkbox"
@@ -28,7 +28,7 @@ function TodoItem(props: ITodoItemProps) {
       <span className={`${isCompleted && styles.completed}`}>
         {isEditing ? (
           <input
-            id={keyId}
+            id={taskId}
             type="text"
             value={editTaskInput}
             onChange={(event) => setEditTaskInput(event.target.value)}
@@ -42,9 +42,9 @@ function TodoItem(props: ITodoItemProps) {
         <i onClick={() => setIsEditing(!isEditing)} className={`fa fa-edit ${styles.right}`}></i>
       )}
       <i
-        id={keyId}
+        id={taskId}
         className={`fa fa-trash ${styles.right}`}
-        onClick={(event) => removeListHandler(event.target.id)}
+        onClick={(event) => removeTaskHandler(event.target.id)}
       ></i>
     </li>
   );

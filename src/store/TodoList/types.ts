@@ -8,19 +8,19 @@ interface ITodoListProps {
   fetchTasks: () => void;
 }
 interface ITodoList {
-  id: number;
+  _id: string;
   todo: string;
   userId: number;
   completed: boolean;
 }
 
 interface ITodoState {
-  todos: ITodoList;
+  todos: ITodoList[];
   loading: boolean;
   error: null | string;
 }
 interface IPayload {
-  index: number;
+  id: string;
   value: string;
 }
 interface IAction {
@@ -37,15 +37,29 @@ interface ITodoItemProps {
   editListHandler: (index: number, value: string) => void;
   removeListHandler: (index: number) => void;
 }
-interface IFormData{
-  task:string;
+interface IFormData {
+  task: string;
 }
 export enum TodoActionTypes {
-  FETCH_TODOS_REQUEST = "FETCH_TODOS_REQUEST",
-  FETCH_TODOS_SUCCESS = "FETCH_TODOS_SUCCESS",
-  FETCH_TODOS_FAILURE = "FETCH_TODOS_FAILURE",
-  ADD_TODO = "ADD_TODO",
-  REMOVE_TODO = "REMOVE_TODO",
-  EDIT_TODO = "EDIT_TODO",
+  FETCH_TASKS_REQUEST = "FETCH_TASKS_REQUEST",
+  FETCH_TASKS_SUCCESS = "FETCH_TASKS_SUCCESS",
+  FETCH_TASKS_FAILURE = "FETCH_TASKS_FAILURE",
+  ADD_TASK_REQUEST = "ADD_TASK_REQUEST",
+  ADD_TASK_SUCCESS = "ADD_TASK_SUCCESS",
+  ADD_TASK_FAILURE = "ADD_TASK_FAILURE",
+  DELETE_TASK_REQUEST = "DELETE_TASK_REQUEST",
+  DELETE_TASK_SUCCESS = "DELETE_TASK_SUCCESS",
+  DELETE_TASK_FAILURE = "DELETE_TASK_FAILURE",
+  UPDATE_TASK_REQUEST = "UPDATE_TASK_REQUEST",
+  UPDATE_TASK_SUCCESS = "UPDATE_TASK_SUCCESS",
+  UPDATE_TASK_FAILURE = "UPDATE_TASK_FAILURE",
 }
-export type { ITodoList, ITodoListProps, IAction, ITodoState, IRootState, ITodoItemProps ,IFormData};
+export type {
+  ITodoList,
+  ITodoListProps,
+  IAction,
+  ITodoState,
+  IRootState,
+  ITodoItemProps,
+  IFormData,
+};

@@ -8,7 +8,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: "@",
+        find: "src",
         replacement: fileURLToPath(new URL("./src", import.meta.url)),
       },
     ],
