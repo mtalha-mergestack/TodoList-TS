@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
 import styles from "@/components/TodoList/TodoList.module.css";
 import TodoItem from "@/components/TodoItem/TodoItem";
-import { ITodoListProps, ITodoList } from "@/store/TodoList/types";
+import { ITodoListProps, ITodoList, IFormData } from "@/store/TodoList/types";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { todoSchema } from "@/store/utils/todoSchema";
 
 function TodoList(props: ITodoListProps) {
   const { todos, loading, error, addTask, removeTask, editTask, fetchTasks } = props;
-  const [taskInput, setTaskInput] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(todoSchema),
+  });
 
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  const addListHandler = (key: string): void => {
-    if (key == "Enter") {
-      addTask(todos.length + 1, taskInput);
-      setTaskInput("");
-    }
+  const addListHandler = (data: IFormData): void => {
+    addTask(todos.length + 1, data.Task);
+    setValue("Task", "");
   };
 
   const removeListHandler = (index: number): void => {
@@ -29,14 +38,15 @@ function TodoList(props: ITodoListProps) {
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>My Todo</h1>
-      <input
-        className={styles.input}
-        value={taskInput}
-        type="text"
-        placeholder="Input task name and press enter to add"
-        onChange={(event) => setTaskInput(event.target.value)}
-        onKeyDown={(event) => addListHandler(event.key)}
-      />
+      {errors.Task && <p>{errors.Task.message}</p>}
+      <form onSubmit={handleSubmit((data) => addListHandler(data))}>
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Input task name and press enter to add"
+          {...register("Task")}
+        />
+      </form>
       <hr />
       <ul className={styles.listContainer}>
         {loading ? (

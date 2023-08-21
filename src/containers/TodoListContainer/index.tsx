@@ -1,9 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { connect } from "react-redux";
 import TodoList from "@/components/TodoList/TodoList";
-import { addTodo, removeTodo, editTodo } from "@/store/TodoList/todoActions";
+import { addTodo, removeTodo, editTodo, fetchTodosRequest } from "@/store/TodoList/todoActions";
 import { IRootState } from "@/store/TodoList/types";
-import { getTodos } from "@/store/utils/api";
 
 const mapStateToProps = (state: IRootState) => ({
   todos: state.todos,
@@ -21,7 +20,7 @@ const maptDispatchToProps = (dispatch) => ({
     dispatch(editTodo(editTaskIndex, editTaskValue));
   },
   fetchTasks: () => {
-    getTodos(dispatch);
+    dispatch(fetchTodosRequest());
   },
 });
 const TodoListContainer = connect(mapStateToProps, maptDispatchToProps)(TodoList);
