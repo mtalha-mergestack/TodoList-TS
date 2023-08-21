@@ -37,6 +37,9 @@ interface ITodoItemProps {
   editListHandler: (index: number, value: string) => void;
   removeListHandler: (index: number) => void;
 }
+interface IFormData{
+  task:string;
+}
 export enum TodoActionTypes {
   FETCH_TODOS_REQUEST = "FETCH_TODOS_REQUEST",
   FETCH_TODOS_SUCCESS = "FETCH_TODOS_SUCCESS",
@@ -45,4 +48,4 @@ export enum TodoActionTypes {
   REMOVE_TODO = "REMOVE_TODO",
   EDIT_TODO = "EDIT_TODO",
 }
-export type { ITodoList, ITodoListProps, IAction, ITodoState, IRootState, ITodoItemProps };
+export type { ITodoList, ITodoListProps, IAction, ITodoState, IRootState, ITodoItemProps ,IFormData};

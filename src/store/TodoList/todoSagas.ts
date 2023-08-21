@@ -5,7 +5,7 @@ import { fetchTodosSuccess, fetchTodosFailure } from "@/store/TodoList/todoActio
 
 function* fetchTodosSaga() {
   try {
-    const response = yield call(axios.get, "https://dummyjson.com/todos"); // Adjust the URL
+    const response = yield call(axios.get, import.meta.env.VITE_GET_TODOS);
     yield put(fetchTodosSuccess(response.data.todos));
   } catch (error) {
     yield put(fetchTodosFailure(error));
