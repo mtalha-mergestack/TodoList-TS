@@ -1,6 +1,7 @@
-import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
-import { TodoActionTypes } from "src/utils/constants";
+import { TODO_ACTIONS_TYPES } from "src/utils/constants";
+import { BASE_URL } from "src/env-config";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   fetchTasksSuccess,
   fetchTodosFailure,
@@ -14,7 +15,7 @@ import {
 
 function* fetchTasksSaga() {
   try {
-    const response = yield call(axios.get, `${import.meta.env.VITE_BASE_URL}/todos`);
+    const response = yield call(axios.get, `${BASE_URL}/todos`);
     yield put(fetchTasksSuccess(response.data));
   } catch (error) {
     yield put(fetchTodosFailure(error));
@@ -25,7 +26,7 @@ function* addTodo(action) {
   try {
     const response = yield call(
       axios.post,
-      `${import.meta.env.VITE_BASE_URL}/todos`,
+      `${BASE_URL}/todos`,
       action.payload
     );
     yield put(addTaskSuccess(response.data));
@@ -36,15 +37,16 @@ function* addTodo(action) {
 
 function* deleteTodo(action) {
   try {
-    yield call(axios.delete, `${import.meta.env.VITE_BASE_URL}/todos/${action.payload}`);
+    yield call(axios.delete, `${BASE_URL}/todos/${action.payload}`);
     yield put(deleteTaskSuccess(action.payload));
   } catch (error) {
     yield put(deleteTaskFailure(error));
   }
 }
+
 function* updateTodo(action) {
   try {
-    yield call(axios.put, `${import.meta.env.VITE_BASE_URL}/todos/${action.payload.id}`, {
+    yield call(axios.put, `${BASE_URL}/todos/${action.payload.id}`, {
       todo: action.payload.todo,
     });
 
@@ -54,15 +56,9 @@ function* updateTodo(action) {
   }
 }
 
-export function* watchFetchTasksSaga() {
-  yield takeEvery(TodoActionTypes.FETCH_TASKS, fetchTasksSaga);
-}
-export function* watchAddTaskSaga() {
-  yield takeEvery(TodoActionTypes.ADD_TASK, addTodo);
-}
-export function* watchDeleteTaskSaga() {
-  yield takeEvery(TodoActionTypes.DELETE_TASK, deleteTodo);
-}
-export function* watchUpdateTaskSaga() {
-  yield takeEvery(TodoActionTypes.UPDATE_TASK, updateTodo);
+export function* watchTodoSaga() {
+  yield takeLatest(TODO_ACTIONS_TYPES.FETCH_TASKS, fetchTasksSaga);
+  yield takeEvery(TODO_ACTIONS_TYPES.ADD_TASK, addTodo);
+  yield takeEvery(TODO_ACTIONS_TYPES.DELETE_TASK, deleteTodo);
+  yield takeEvery(TODO_ACTIONS_TYPES.UPDATE_TASK, updateTodo);
 }

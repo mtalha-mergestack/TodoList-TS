@@ -10,7 +10,7 @@ function TodoItem(props: ITodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const editTask = (key: string, index: number, value: string): void => {
-    if (key == "Enter" && isCompleted != true) {
+    if (key == "Enter" && !isCompleted) {
       editTaskHandler(index, value);
       setIsEditing(false);
     }

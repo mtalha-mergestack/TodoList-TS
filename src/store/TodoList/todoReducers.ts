@@ -1,5 +1,5 @@
 import { ITodoState, IAction, ITodoList } from "src/store/TodoList/types";
-import { TodoActionTypes } from "src/utils/constants";
+import { TODO_ACTIONS_TYPES } from "src/utils/constants";
 
 const initialState: ITodoState = {
   todos: [],
@@ -9,53 +9,53 @@ const initialState: ITodoState = {
 
 const todoReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
-    case TodoActionTypes.FETCH_TASKS:
+    case TODO_ACTIONS_TYPES.FETCH_TASKS:
       return { ...state, loading: true, error: null };
 
-    case TodoActionTypes.FETCH_TASKS_SUCCESS:
+    case TODO_ACTIONS_TYPES.FETCH_TASKS_SUCCESS:
       return { ...state, loading: false, todos: action.payload, error: null };
 
-    case TodoActionTypes.FETCH_TASKS_FAILURE:
+    case TODO_ACTIONS_TYPES.FETCH_TASKS_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
-    case TodoActionTypes.ADD_TASK:
+    case TODO_ACTIONS_TYPES.ADD_TASK:
       return { ...state, loading: true, error: null };
 
-    case TodoActionTypes.ADD_TASK_SUCCESS:
+    case TODO_ACTIONS_TYPES.ADD_TASK_SUCCESS:
       return {
         todos: [...state.todos, action.payload],
         loading: false,
         error: null,
       };
 
-    case TodoActionTypes.ADD_TASK_FAILURE:
+    case TODO_ACTIONS_TYPES.ADD_TASK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case TodoActionTypes.DELETE_TASK:
+    case TODO_ACTIONS_TYPES.DELETE_TASK:
       return { ...state, loading: true, error: null };
 
-    case TodoActionTypes.DELETE_TASK_SUCCESS:
+    case TODO_ACTIONS_TYPES.DELETE_TASK_SUCCESS:
       return {
         todos: state.todos.filter((todoItem: ITodoList) => todoItem._id != action.payload),
         loading: false,
         error: null,
       };
 
-    case TodoActionTypes.DELETE_TASK_FAILURE:
+    case TODO_ACTIONS_TYPES.DELETE_TASK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case TodoActionTypes.UPDATE_TASK:
+    case TODO_ACTIONS_TYPES.UPDATE_TASK:
       return { ...state, loading: true, error: null };
 
-    case TodoActionTypes.UPDATE_TASK_SUCCESS:
+    case TODO_ACTIONS_TYPES.UPDATE_TASK_SUCCESS:
       return {
         todos: state.todos.map((todoItem: ITodoList) =>
           todoItem._id == action.payload.id ? { ...todoItem, todo: action.payload.todo } : todoItem
@@ -64,7 +64,7 @@ const todoReducer = (state = initialState, action: IAction) => {
         error: null,
       };
 
-    case TodoActionTypes.UPDATE_TASK_FAILURE:
+    case TODO_ACTIONS_TYPES.UPDATE_TASK_FAILURE:
       return {
         ...state,
         loading: false,

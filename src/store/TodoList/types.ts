@@ -1,51 +1,48 @@
-interface ITodoListProps {
+export interface ITodoListProps {
   todos: string[];
   loading: boolean;
   error: null | string;
-  addTask: (index: number, text: string) => void;
+  addTask: (text: string) => void;
   removeTask: (index: number) => void;
   editTask: (index: number, value: string) => void;
   fetchTasks: () => void;
 }
-interface ITodoList {
+
+export interface ITodoList {
   _id: string;
   todo: string;
   userId: number;
   completed: boolean;
 }
 
-interface ITodoState {
+export interface ITodoState {
   todos: ITodoList[];
   loading: boolean;
   error: null | string;
 }
-interface IPayload {
+
+export interface IPayload {
   id: string;
   value: string;
 }
-interface IAction {
+
+export interface IAction {
   type: string;
   payload: IPayload;
 }
-interface IRootState {
+
+export interface IRootState {
   todo: ITodoState;
 }
-interface ITodoItemProps {
-  keyId: number;
+
+export interface ITodoItemProps {
+  taskId: string;
   value: number;
   completed: boolean;
-  editListHandler: (index: number, value: string) => void;
-  removeListHandler: (index: number) => void;
+  editTaskHandler: (index: number, value: string) => void;
+  removeTaskHandler: (index: number) => void;
 }
-interface IFormData {
-  task: string;
+
+export interface IFormData {
+  Task: string;
 }
-export type {
-  ITodoList,
-  ITodoListProps,
-  IAction,
-  ITodoState,
-  IRootState,
-  ITodoItemProps,
-  IFormData,
-};

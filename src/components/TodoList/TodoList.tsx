@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "src/components/TodoList/TodoList.module.css";
 import TodoItem from "src/components/TodoItem/TodoItem";
-import { ITodoListProps, ITodoList, IFormData } from "src/store/TodoList/types";
+import { ITodoListProps, IFormData } from "src/store/TodoList/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { todoSchema } from "src/utils/schema";
@@ -12,7 +12,7 @@ function TodoList(props: ITodoListProps) {
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(todoSchema),
@@ -23,8 +23,8 @@ function TodoList(props: ITodoListProps) {
   }, [fetchTasks]);
 
   const addTaskHandler = (data: IFormData): void => {
-    addTask(todos.length + 1, data.Task);
-    setValue("Task", "");
+    addTask(data.Task);
+    reset();
   };
 
   const removeTaskHandler = (index: number): void => {
@@ -52,7 +52,7 @@ function TodoList(props: ITodoListProps) {
         {loading ? (
           <h1>Loading</h1>
         ) : (
-          todos.map((todoItem: ITodoList) => (
+          todos.map((todoItem) => (
             <TodoItem
               key={todoItem._id}
               taskId={todoItem._id}

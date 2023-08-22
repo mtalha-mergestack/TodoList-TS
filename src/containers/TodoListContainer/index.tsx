@@ -1,8 +1,7 @@
-/* eslint-disable react-refresh/only-export-components */
 import { connect } from "react-redux";
+import { IRootState } from "src/store/TodoList/types";
 import TodoList from "src/components/TodoList/TodoList";
 import { fetchTasks, addTask, deleteTask, updateTask } from "src/store/TodoList/todoActions";
-import { IRootState } from "src/store/TodoList/types";
 
 const mapStateToProps = (state: IRootState) => ({
   todos: state.todo.todos,
@@ -11,7 +10,7 @@ const mapStateToProps = (state: IRootState) => ({
 });
 
 const maptDispatchToProps = (dispatch) => ({
-  addTask: (index: number, text: string): void => {
+  addTask: (text: string): void => {
     dispatch(addTask({ todo: text, isCompleted: false, userId: 1 }));
   },
   removeTask: (id: string): void => {
@@ -24,5 +23,7 @@ const maptDispatchToProps = (dispatch) => ({
     dispatch(fetchTasks());
   },
 });
+
 const TodoListContainer = connect(mapStateToProps, maptDispatchToProps)(TodoList);
+
 export default TodoListContainer;
