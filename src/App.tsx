@@ -1,9 +1,9 @@
-import React from 'react'
-import TodoListContainer from "src/containers/TodoListContainer";
+import React from "react";
 import "src/App.css";
+import TodoListContainer from "src/containers/TodoListContainer";
 
 function App() {
-  return <TodoListContainer />
+  return <TodoListContainer />;
 }
 
 export default App;

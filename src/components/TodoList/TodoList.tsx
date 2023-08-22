@@ -4,7 +4,7 @@ import TodoItem from "src/components/TodoItem/TodoItem";
 import { ITodoListProps, ITodoList, IFormData } from "src/store/TodoList/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { todoSchema } from "src/utils/schema/schema";
+import { todoSchema } from "src/utils/schema";
 
 function TodoList(props: ITodoListProps) {
   const { todos, loading, error, addTask, removeTask, editTask, fetchTasks } = props;

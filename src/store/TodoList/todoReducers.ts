@@ -1,5 +1,5 @@
 import { ITodoState, IAction, ITodoList } from "src/store/TodoList/types";
-import { TodoActionTypes } from "src/store/TodoList/types";
+import { TodoActionTypes } from "src/utils/constants";
 
 const initialState: ITodoState = {
   todos: [],
@@ -9,13 +9,16 @@ const initialState: ITodoState = {
 
 const todoReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
-    case TodoActionTypes.FETCH_TASKS_REQUEST:
+    case TodoActionTypes.FETCH_TASKS:
       return { ...state, loading: true, error: null };
+
     case TodoActionTypes.FETCH_TASKS_SUCCESS:
       return { ...state, loading: false, todos: action.payload, error: null };
+
     case TodoActionTypes.FETCH_TASKS_FAILURE:
       return { ...state, loading: false, error: action.payload };
-    case TodoActionTypes.ADD_TASK_REQUEST:
+
+    case TodoActionTypes.ADD_TASK:
       return { ...state, loading: true, error: null };
 
     case TodoActionTypes.ADD_TASK_SUCCESS:
@@ -24,13 +27,15 @@ const todoReducer = (state = initialState, action: IAction) => {
         loading: false,
         error: null,
       };
+
     case TodoActionTypes.ADD_TASK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case TodoActionTypes.DELETE_TASK_REQUEST:
+
+    case TodoActionTypes.DELETE_TASK:
       return { ...state, loading: true, error: null };
 
     case TodoActionTypes.DELETE_TASK_SUCCESS:
@@ -39,13 +44,15 @@ const todoReducer = (state = initialState, action: IAction) => {
         loading: false,
         error: null,
       };
+
     case TodoActionTypes.DELETE_TASK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case TodoActionTypes.UPDATE_TASK_REQUEST:
+
+    case TodoActionTypes.UPDATE_TASK:
       return { ...state, loading: true, error: null };
 
     case TodoActionTypes.UPDATE_TASK_SUCCESS:
@@ -56,12 +63,14 @@ const todoReducer = (state = initialState, action: IAction) => {
         loading: false,
         error: null,
       };
+
     case TodoActionTypes.UPDATE_TASK_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
+
     default:
       return state;
   }

@@ -1,16 +1,20 @@
-import { TodoActionTypes, ITodoList } from "src/store/TodoList/types";
+import { ITodoList } from "src/store/TodoList/types";
+import { TodoActionTypes } from "src/utils/constants";
 
-export const fetchTasksRequest = () => ({ type: TodoActionTypes.FETCH_TASKS_REQUEST });
+export const fetchTasks = () => ({ type: TodoActionTypes.FETCH_TASKS });
+
 export const fetchTasksSuccess = (todos: ITodoList) => ({
   type: TodoActionTypes.FETCH_TASKS_SUCCESS,
   payload: todos,
 });
+
 export const fetchTodosFailure = (error: string) => ({
   type: TodoActionTypes.FETCH_TASKS_FAILURE,
   payload: error,
 });
-export const addTaskRequest = (task) => ({
-  type: TodoActionTypes.ADD_TASK_REQUEST,
+
+export const addTask = (task) => ({
+  type: TodoActionTypes.ADD_TASK,
   payload: task,
 });
 
@@ -23,8 +27,8 @@ export const addTaskFailure = (error: string) => ({
   type: TodoActionTypes.ADD_TASK_FAILURE,
   payload: error,
 });
-export const deleteTaskRequest = (id) => ({
-  type: TodoActionTypes.DELETE_TASK_REQUEST,
+export const deleteTask = (id) => ({
+  type: TodoActionTypes.DELETE_TASK,
   payload: id,
 });
 
@@ -37,8 +41,8 @@ export const deleteTaskFailure = (error: string) => ({
   type: TodoActionTypes.DELETE_TASK_FAILURE,
   payload: error,
 });
-export const updateTaskRequest = (id, text) => ({
-  type: TodoActionTypes.UPDATE_TASK_REQUEST,
+export const updateTask = (id, text) => ({
+  type: TodoActionTypes.UPDATE_TASK,
   payload: { id: id, todo: text },
 });
 
