@@ -1,8 +1,8 @@
 import { all } from "redux-saga/effects";
-import watchFetchTodos from "@/store/TodoList/todoSagas";
+import { watchTodoSaga } from "src/store/TodoList/todoSagas";
 
 function* rootSaga() {
-  yield all([watchFetchTodos()]);
+  yield all([watchTodoSaga()]);
 }
 
 export default rootSaga;

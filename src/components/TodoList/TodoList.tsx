@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import styles from "@/components/TodoList/TodoList.module.css";
-import TodoItem from "@/components/TodoItem/TodoItem";
-import { ITodoListProps, ITodoList, IFormData } from "@/store/TodoList/types";
+import React, { useEffect } from "react";
+import styles from "src/components/TodoList/TodoList.module.css";
+import TodoItem from "src/components/TodoItem/TodoItem";
+import { ITodoListProps, IFormData } from "src/store/TodoList/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { todoSchema } from "@/store/utils/todoSchema";
+import { todoSchema } from "src/utils/schema";
 
 function TodoList(props: ITodoListProps) {
   const { todos, loading, error, addTask, removeTask, editTask, fetchTasks } = props;
@@ -12,7 +12,7 @@ function TodoList(props: ITodoListProps) {
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(todoSchema),
@@ -20,53 +20,50 @@ function TodoList(props: ITodoListProps) {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
-  const addListHandler = (data: IFormData): void => {
-    addTask(todos.length + 1, data.Task);
-    setValue("Task", "");
+  const addTaskHandler = (data: IFormData): void => {
+    addTask(data.Task);
+    reset();
   };
 
-  const removeListHandler = (index: number): void => {
+  const removeTaskHandler = (index: number): void => {
     removeTask(index);
   };
 
-  const editListHandler = (index: number, value: string): void => {
+  const editTaskHandler = (index: number, value: string): void => {
     editTask(index, value);
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>My Todo</h1>
-      {errors.Task && <p>{errors.Task.message}</p>}
-      <form onSubmit={handleSubmit((data) => addListHandler(data))}>
+      <form onSubmit={handleSubmit((data) => addTaskHandler(data))}>
         <input
           className={styles.input}
           type="text"
           placeholder="Input task name and press enter to add"
           {...register("Task")}
         />
+        {errors.Task && <p className={styles.error}>{errors.Task.message}</p>}
       </form>
       <hr />
       <ul className={styles.listContainer}>
         {loading ? (
-          error ? (
-            <h3>{error}</h3>
-          ) : (
-            <h1>Loading...</h1>
-          )
+          <h1>Loading</h1>
         ) : (
-          todos.map((todoItem: ITodoList) => (
+          todos.map((todoItem) => (
             <TodoItem
-              key={todoItem.id}
-              keyId={todoItem.id}
+              key={todoItem._id}
+              taskId={todoItem._id}
               value={todoItem.todo}
               completed={todoItem.completed}
-              editListHandler={editListHandler}
-              removeListHandler={removeListHandler}
+              editTaskHandler={editTaskHandler}
+              removeTaskHandler={removeTaskHandler}
             />
           ))
         )}
+        {error && <h1>{error.message}</h1>}
       </ul>
     </div>
   );
